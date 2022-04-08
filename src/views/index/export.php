@@ -12,7 +12,6 @@ $("#btnBack").on('click',function(){
     window.history.back()
     return false;
 })
-
 JS
     , View::POS_READY);
 
@@ -28,8 +27,17 @@ JS
                 <?= Html::beginForm(Url::toRoute(['export']), 'POST') ?>
                 <?= Html::checkboxList('exportAttributes', null, $grid->attributeLabels(), [
                     'item' => function ($index, $label, $name, $checked, $value) {
-                        $fixed = $value == 'id';
-                        return Html::checkbox($name, $fixed, ['value' => $value, 'label' => Html::encode($label), 'id' => 'id']);
+                        $options = [
+                            'value' => $value,
+                            'label' => Html::encode($label),
+                            'class' => [
+                                'form-check-input',
+                            ],
+                            'disabled' => $value === 'id',
+                        ];
+                        $checkbox = Html::checkbox($name, $value == 'id', $options);
+                        $checkbox .= $value == 'id' ? Html::hiddenInput($name, $value) : '';
+                        return "<div class=\"form-check\"> $checkbox </div>";
                     },
                 ]) ?>
                 <?php foreach (Yii::$app->request->get() as $k => $v): ?>
