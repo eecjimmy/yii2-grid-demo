@@ -12,7 +12,12 @@ return [
             'sourcePath' => null,
             'baseUrl' => '//lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/5.1.3/',
             'css' => [
-                'css/bootstrap.min.css'
+                'css/bootstrap.min.css',
+                'css/bootstrap-grid.min.css',
+            ],
+            'js' => [
+                'js/bootstrap.bundle.min.js',
+                'js/bootstrap.min.js',
             ],
         ],
         'yii\bootstrap5\BootstrapPluginAsset' => [

@@ -22,7 +22,9 @@ YiiAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?=$content?>
+<div class="container mt-5">
+    <?= $content ?>
+</div>
 <?php $this->endBody() ?>
 </body>
 </html>
