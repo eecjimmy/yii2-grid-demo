@@ -15,6 +15,10 @@ $this->registerJs(<<<JAVASCRIPT
 JAVASCRIPT
     , View::POS_READY)
 ?>
+<style>
+    table > thead a.asc:after {content: "↑"}
+    table > thead a.desc:after {content: "↓"}
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -34,8 +38,10 @@ JAVASCRIPT
                         <?= Html::dropDownList('t_status', $grid->t_status, Supplier::tStatuses(), ['prompt' => sprintf('请选择%s', $grid->getAttributeLabel('t_status')), 'class' => ['form-select']]) ?>
                     </div>
                     <div class="col">
-                        <?= Html::submitButton('筛选', ['class' => ['btn', 'btn-info']]) ?>
-                        <?= Html::submitButton('导出全部', ['class' => ['btn', 'btn-info'], 'name' => 'is_export', 'value' => 1]) ?>
+                        <div class="btn-group">
+                            <?= Html::submitButton('筛选', ['class' => ['btn', 'btn-primary']]) ?>
+                            <?= Html::submitButton('导出全部', ['class' => ['btn', 'btn-secondary'], 'name' => 'is_export', 'value' => 1]) ?>
+                        </div>
                     </div>
                     <div class="col">
                     </div>

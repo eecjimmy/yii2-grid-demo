@@ -3,8 +3,18 @@
 use app\models\SupplierGrid;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
 
 /** @var SupplierGrid $grid */
+/** @var View $this */
+$this->registerJs(<<<JS
+$("#btnBack").on('click',function(){
+    window.history.back()
+    return false;
+})
+
+JS
+    , View::POS_READY);
 
 ?>
 
@@ -25,7 +35,10 @@ use yii\helpers\Url;
                 <?php foreach (Yii::$app->request->get() as $k => $v): ?>
                     <?= Html::hiddenInput($k, $v) ?>
                 <?php endforeach ?>
-                <?= Html::submitButton("确定", ['class' => ['btn', 'btn-success']]) ?>
+                <div class="btn-group">
+                    <?= Html::submitButton("确定", ['class' => ['btn', 'btn-primary']]) ?>
+                    <?= Html::button("返回", ['class' => ['btn', 'btn-secondary'], 'id' => 'btnBack']) ?>
+                </div>
                 <?= Html::endForm() ?>
             </div>
         </div>
