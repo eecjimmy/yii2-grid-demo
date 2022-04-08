@@ -35,7 +35,7 @@ JS
                             ],
                             'disabled' => $value === 'id',
                         ];
-                        $checkbox = Html::checkbox($name, $value == 'id', $options);
+                        $checkbox = Html::checkbox($name, true, $options);
                         $checkbox .= $value == 'id' ? Html::hiddenInput($name, $value) : '';
                         return "<div class=\"form-check\"> $checkbox </div>";
                     },
