@@ -25,7 +25,7 @@ class m220407_093015_supplier extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(50)->notNull()->defaultValue('')->comment(''),
             'code' => $this->char(3)->notNull()->defaultValue('')->comment(''),
-            't_status' => $this->char(5)->notNull()->defaultValue('')->comment(''),
+            't_status' => 'ENUM("ok", "hold")',
         ]);
 
         $this->createIndex('uk_code', $this->tableName, 'code', true);
