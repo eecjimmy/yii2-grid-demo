@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  mysql:
+    restart: always
+    build: ./docker/mysql
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASS}
+      - MYSQL_DATABASE=${MYSQL_NAME}
+      - TZ=${TZ}
+  php-fpm:
+    restart: always
+    build: ./docker/php
+    volumes:
+      - .:/var/www
+    depends_on:
+      - mysql
+    environment:
+      - TZ=${TZ}
+  nginx:
+    restart: always
+    build: ./docker/nginx
+    ports:
+      - ${PORT}:8080
+    volumes:
+      - .:/var/www
+    depends_on:
+      - php-fpm
+    environment:
+      - TZ=${TZ}
+    entrypoint: [ "wait-for-it", "-s", "php-fpm:9000", "--", "nginx", "-g", "daemon off;" ]
