@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
@@ -11,17 +12,31 @@ use yii\web\Response;
  */
 class SupplierExporter extends SupplierGrid
 {
-    public $exportAttributes = [];
+    /**
+     * 导出的字段
+     * @var array
+     */
+    public array $exportAttributes = [];
 
+    /**
+     * @inheritDoc
+     */
     public function rules(): array
     {
         return ArrayHelper::merge(parent::rules(), [
             ['exportAttributes', 'required'],
+
+            /** @see includeAttributes */
             ['exportAttributes', 'includeAttributes', 'params' => ['id']],
         ]);
     }
 
-    public function includeAttributes($attr, $params = [])
+    /**
+     * 校验是否包含了指定字段
+     * @param $attr
+     * @param array $params
+     */
+    public function includeAttributes($attr, array $params = [])
     {
         if ($this->hasErrors()) return;
         foreach ($params as $key) {
@@ -31,7 +46,11 @@ class SupplierExporter extends SupplierGrid
         }
     }
 
-    public function export()
+    /**
+     * 导出操作
+     * @return false|string|\yii\web\Response
+     */
+    public function export(): Response|bool|string
     {
         if (!$this->validate()) {
             return false;
@@ -53,7 +72,8 @@ class SupplierExporter extends SupplierGrid
             $data[] = implode(",", $row);
         }
 
-        $resp = \Yii::$app->response;
+        // web导出处理
+        $resp = Yii::$app->response;
         if ($resp instanceof Response) {
             $resp->format = Response::FORMAT_RAW;
             $resp->content = implode("\n", $data);
@@ -61,6 +81,7 @@ class SupplierExporter extends SupplierGrid
             return $resp;
         }
 
+        // 非web导出, 直接返回`csv`文件字符串
         return implode("\n", $data);
     }
 }

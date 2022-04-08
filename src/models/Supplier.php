@@ -40,6 +40,9 @@ class Supplier extends ActiveRecord
         return '{{%suppliers}}';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function attributeLabels()
     {
         return [
@@ -50,6 +53,9 @@ class Supplier extends ActiveRecord
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function rules(): array
     {
         return [

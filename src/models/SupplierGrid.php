@@ -2,25 +2,24 @@
 
 namespace app\models;
 
-use yii\bootstrap5\ActiveForm;
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
 
 /**
  * SupplierGrid
  */
 class SupplierGrid extends Supplier
 {
-    const DEFAULT_OPERATOR = '=';
-
-    public $searchAttributes = [
+    /**
+     * 允许搜索的检索的字段
+     * 字段名 => 检索方式
+     * @var string[]
+     */
+    public array $searchAttributes = [
         'id' => '=',
         'name' => 'like',
         'code' => 'like',
         't_status' => '=',
     ];
-
-    public $isExport = false;
 
     /**
      * @inheritDoc
@@ -37,27 +36,6 @@ class SupplierGrid extends Supplier
         ];
     }
 
-    private $searchForm;
-
-    public function getSearchForm()
-    {
-        if ($this->searchForm === null) {
-            $this->searchForm = ActiveForm::begin();
-        }
-        return $this->searchForm;
-    }
-
-    public function searchField($attribute, $options = [])
-    {
-        $form = $this->getSearchForm();
-
-        $options = ArrayHelper::merge([
-            'inline' => true,
-        ], $options);
-
-        return $form->field($this, $attribute, $options);
-    }
-
     public function getProvider(): ActiveDataProvider
     {
         $query = static::find();
@@ -65,7 +43,7 @@ class SupplierGrid extends Supplier
             'query' => $query,
         ]);
         foreach ($this->safeAttributes() as $attribute) {
-            if (!array_key_exists($attribute, $this->searchAttributes)) continue; // 禁止搜素字段
+            if (empty($this->searchAttributes[$attribute])) continue;
             if (!$this->validate($attribute)) continue; // 搜索字段校验未通过
 
             $op = $this->searchAttributes[$attribute];
