@@ -23,7 +23,7 @@ services:
     restart: always
     build: ./docker/nginx
     ports:
-      - ${PORT}:8080
+      - ${PORT}:80
     volumes:
       - .:/var/www
     depends_on:
