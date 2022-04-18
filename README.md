@@ -3,9 +3,8 @@
 - 部署步骤
 
 ```shell
-# 授予www-data权限
-chown 33:33 yii2-grid-demo
-chown 33:33 yii2-grid-demo/public
+# 进入目录并授权
+sudo chown 33:33 . -R
 
 # 运行
 docker-compose up --build -d
