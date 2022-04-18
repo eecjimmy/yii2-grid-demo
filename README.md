@@ -3,6 +3,10 @@
 - 部署步骤
 
 ```shell
+# 授予www-data权限
+chown 33:33 yii2-grid-demo
+chown 33:33 yii2-grid-demo/public
+
 # 运行
 docker-compose up --build -d
 
